@@ -81,7 +81,25 @@ async function undoLastAction() {
   }
 }
 
+/**
+ * Parses a natural language command and executes the corresponding action.
+ *
+ * @param {string} command - The natural language command.
+ */
+async function parseCommand(command) {
+  const organizeRegex = /organize files in (.+) by (.+)/;
+  const match = command.match(organizeRegex);
+
+  if (match) {
+    const [, directory, criteria] = match;
+    await organizeFiles(directory, criteria);
+  } else {
+    console.log('Unknown command.');
+  }
+}
+
 module.exports = {
   organizeFiles,
   undoLastAction,
+  parseCommand,
 };
