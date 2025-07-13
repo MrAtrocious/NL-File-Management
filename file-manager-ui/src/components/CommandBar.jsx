@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const CommandBar = () => {
+const CommandBar = ({ onCommand }) => {
+  const [command, setCommand] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (command.trim()) {
+      onCommand(command);
+      setCommand('');
+    }
+  };
+
   return (
-    <div className="command-bar">
-      <input type="text" placeholder="What would you like to do?" />
-      <button>🎤</button>
-    </div>
+    <form className="command-bar" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="What would you like to do?"
+        value={command}
+        onChange={(e) => setCommand(e.target.value)}
+      />
+      <button type="submit">🎤</button>
+    </form>
   );
 };
 
